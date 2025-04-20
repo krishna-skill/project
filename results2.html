@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donor Search Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background: #dc3545;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      table, th, td {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Donor Search Results</h2>
+    <div id="results"></div>
+    <table id="donorsTable" style="display: none;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Blood Type</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>State</th>
+          <th>District</th>
+        </tr>
+      </thead>
+      <tbody id="donorsTableBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    // Retrieve search parameters from localStorage
+    const searchParamsStr = localStorage.getItem('searchParams');
+    if (!searchParamsStr) {
+      document.getElementById('results').innerHTML = '<p>No search parameters found. Please go back and search for donors.</p>';
+    } else {
+      const searchParams = JSON.parse(searchParamsStr);
+      
+      // Dummy donor data (replace with your real data as needed)
+      const donors = [
+        { name: 'John Doe', bloodType: 'A+', age: 25, gender: 'Male', state: 'California', district: 'Los Angeles' },
+        { name: 'Jane Smith', bloodType: 'O-', age: 30, gender: 'Female', state: 'California', district: 'San Diego' },
+        { name: 'Alice Johnson', bloodType: 'A+', age: 28, gender: 'Female', state: 'California', district: 'Los Angeles' },
+        { name: 'Bob Brown', bloodType: 'B+', age: 35, gender: 'Male', state: 'New York', district: 'New York City' },
+        { name: 'Charlie Davis', bloodType: 'O+', age: 22, gender: 'Male', state: 'Texas', district: 'Dallas' },
+        { name: 'Rohan', bloodType: 'O+', age: 18, gender: 'Male', state: 'UP', district: 'MORADABAD' },
+        { name: 'Ritesh', bloodType: 'O+', age: 18, gender: 'Male', state: 'Bihar', district: 'Saran' },
+        { name: 'HARSH', bloodType: 'O-', age: 18, gender: 'Male', state: 'UP', district: 'Amroha' }
+      ];
+      
+      // Filter donors based on search parameters
+      const filteredDonors = donors.filter(donor => {
+        // Compare blood type, age, gender, and state; district is optional
+        const matchesBloodType = donor.bloodType === searchParams.bloodType;
+        const matchesAge = donor.age == searchParams.age; // Using loose equality for this demo
+        const matchesGender = donor.gender.toLowerCase() === searchParams.gender.toLowerCase();
+        const matchesState = donor.state.toLowerCase() === searchParams.state.toLowerCase();
+        let matchesDistrict = true;
+        if (searchParams.district && searchParams.district.trim() !== '') {
+          matchesDistrict = donor.district.toLowerCase() === searchParams.district.toLowerCase();
+        }
+        return matchesBloodType && matchesAge && matchesGender && matchesState && matchesDistrict;
+      });
+      
+      // Display results in the table
+      if (filteredDonors.length === 0) {
+        document.getElementById('results').innerHTML = '<p>No donors found matching your search criteria.</p>';
+      } else {
+        document.getElementById('donorsTable').style.display = 'table';
+        const tableBody = document.getElementById('donorsTableBody');
+        filteredDonors.forEach(donor => {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${donor.name}</td>
+                           <td>${donor.bloodType}</td>
+                           <td>${donor.age}</td>
+                           <td>${donor.gender}</td>
+                           <td>${donor.state}</td>
+                           <td>${donor.district}</td>`;
+          tableBody.appendChild(row);
+        });
+      }
+    }
+  </script>
+</body>
+</html>

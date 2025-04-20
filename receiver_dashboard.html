@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receiver Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        h2 {
+            text-align: center;
+            color: #d32f2f;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #d32f2f;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #b71c1c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Request Blood</h2>
+        <form id="requestForm">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="text" id="bloodType" placeholder="Blood Type (e.g. A+)" required>
+            <input type="text" id="hospital" placeholder="Hospital Name" required>
+            <input type="text" id="contact" placeholder="Contact Number" required>
+            <button type="submit">Submit Request</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("requestForm").onsubmit = function(event) {
+            event.preventDefault();
+
+            let name = document.getElementById("name").value;
+            let bloodType = document.getElementById("bloodType").value;
+            let hospital = document.getElementById("hospital").value;
+            let contact = document.getElementById("contact").value;
+
+            let requestData = {
+                name,
+                bloodType,
+                hospital,
+                contact,
+                status: "Pending"
+            };
+
+            let requests = JSON.parse(localStorage.getItem("bloodRequests")) || [];
+            requests.push(requestData);
+            localStorage.setItem("bloodRequests", JSON.stringify(requests));
+
+            alert("Request Submitted Successfully!");
+        };
+    </script>
+
+</body>
+</html>

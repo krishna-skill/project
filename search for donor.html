@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Donation - Search Donors</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; }
+    .container { max-width: 400px; margin: 50px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); }
+    input, select, button { width: 100%; padding: 10px; margin: 10px 0; font-size: 16px; }
+    button { background: red; color: white; border: none; cursor: pointer; }
+    button:hover { opacity: 0.8; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Search for a Blood Donor</h2>
+    <select id="blood-type">
+      <option value="">Select Blood Type</option>
+      <option value="A+">A+</option>
+      <option value="A-">A-</option>
+      <option value="B+">B+</option>
+      <option value="B-">B-</option>
+      <option value="AB+">AB+</option>
+      <option value="AB-">AB-</option>
+      <option value="O+">O+</option>
+      <option value="O-">O-</option>
+    </select>
+    <input type="number" id="age" placeholder="Enter Age" min="18">
+    <select id="gender">
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+    <input type="text" id="state" placeholder="Enter State">
+    <input type="text" id="district" placeholder="Enter District">
+    <button onclick="searchDonors()">Search Donors</button>
+  </div>
+
+  <script>
+    function searchDonors() {
+      const bloodType = document.getElementById('blood-type').value;
+      const age = document.getElementById('age').value;
+      const gender = document.getElementById('gender').value;
+      const state = document.getElementById('state').value;
+      const district = document.getElementById('district').value;
+
+      if (!bloodType || !age || !gender || !state) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      const searchParams = { bloodType, age, gender, state, district };
+      localStorage.setItem('searchParams', JSON.stringify(searchParams));
+      window.location.href = "results2.html"; // Redirect to results page
+    }
+  </script>
+
+</body>
+</html>

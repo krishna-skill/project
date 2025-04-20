@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Booking</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  
+  <style>
+    /* Modern Gradient Background */
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #ffdde1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Glassmorphism Container */
+    .container {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 30px;
+      border-radius: 15px;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(15px);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Title */
+    h2 {
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    /* Input Groups */
+    .input-group {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.4);
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.3s ease-in-out;
+    }
+
+    /* Input Fields */
+    input {
+      border: none;
+      outline: none;
+      font-size: 16px;
+      background: transparent;
+      width: 100%;
+      color: white;
+    }
+
+    /* Icons */
+    .input-group i {
+      margin-right: 10px;
+      color: white;
+    }
+
+    /* Input Hover Effect */
+    .input-group:hover {
+      background: rgba(255, 255, 255, 0.6);
+      transform: scale(1.02);
+    }
+
+    /* Placeholder Color */
+    ::placeholder {
+      color: white;
+      opacity: 0.8;
+    }
+
+    /* Button */
+    button {
+      background: linear-gradient(90deg, #ff416c, #ff4b2b);
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 18px;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 10px;
+      transition: all 0.3s ease-in-out;
+      font-weight: bold;
+    }
+
+    /* Button Hover Effect */
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(255, 75, 43, 0.3);
+    }
+
+    /* Confirmation Message */
+    #confirmationMessage {
+      color: #27ae60;
+      font-weight: bold;
+      margin-top: 15px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.5s ease-in-out;
+    }
+
+    /* Animation for Fade-in Effect */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h2>Book an Appointment</h2>
+    
+    <form id="appointmentForm">
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="name" placeholder="Full Name" required>
+      </div>
+
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="email" placeholder="Email" required>
+      </div>
+
+      <div class="input-group">
+        <i class="fas fa-phone"></i>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+      </div>
+
+      <div class="input-group">
+        <i class="fas fa-calendar"></i>
+        <input type="date" id="date" required>
+      </div>
+
+      <div class="input-group">
+        <i class="fas fa-clock"></i>
+        <input type="time" id="time" required>
+      </div>
+
+      <button type="submit">Book Appointment</button>
+    </form>
+
+    <p id="confirmationMessage"></p>
+  </div>
+
+  <script>
+    document.getElementById("appointmentForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent page refresh
+
+      const name = document.getElementById("name").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const confirmationMessage = document.getElementById("confirmationMessage");
+
+      if (name && date && time) {
+        confirmationMessage.innerText = `✅ Appointment booked for ${name} on ${date} at ${time}.`;
+        confirmationMessage.style.opacity = "1"; // Show confirmation message
+        confirmationMessage.style.transform = "translateY(0)";
+        this.reset(); // Clear form after submission
+      } else {
+        confirmationMessage.innerText = "❌ Please fill all the fields.";
+        confirmationMessage.style.color = "red";
+        confirmationMessage.style.opacity = "1";
+        confirmationMessage.style.transform = "translateY(0)";
+      }
+    });
+  </script>
+
+</body>
+</html>
